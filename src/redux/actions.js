@@ -1,4 +1,23 @@
-export const myAction = value => ({
-    type: 'MY_ACTION',
-    payload: value,
+import { v4 as uuidv4 } from 'uuid';
+import types from './types';
+
+const addContact = name => ({
+    type: types.ADD,
+    payload: {
+        id: uuidv4(),
+        name,
+        number: '',
+    },
 });
+
+const deleteContact = contactId => ({
+    type: types.DELETE,
+    payload: contactId,
+});
+
+const changeFilter = value => ({
+    type: types.CHANGE_FILTER,
+    payload: value,
+})
+
+export default { addContact, deleteContact, changeFilter }
