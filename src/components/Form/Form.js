@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import {addContact} from '../../redux/actions'
 import style from './Form.module.css'
 
-export default function Form({onSubmit}) {
+export default function Form({ onSubmit }) {
+    const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
     
-    const nameInputId = uuidv4();
-    const numberInpntId = uuidv4();
-    
-
     const handleChange = event => {
         const { name, value } = event.currentTarget;
 
@@ -35,7 +32,7 @@ export default function Form({onSubmit}) {
             return;
         }
 
-        onSubmit(name, number);
+        dispatch(addContact({ name, number }));
         setName('');
         setNumber('');
     };
@@ -53,7 +50,7 @@ export default function Form({onSubmit}) {
                     required
                     value={name}
                     onChange={handleChange}
-                    id={nameInputId}
+                    // id={nameInputId}
                 />
                 </label>
 
@@ -68,7 +65,7 @@ export default function Form({onSubmit}) {
                     required
                     value={number}
                     onChange={handleChange}
-                    id={numberInpntId}
+                    // id={numberInpntId}
                 />
                 </label>
 
@@ -76,10 +73,4 @@ export default function Form({onSubmit}) {
             </form>
         )
     }
-
-Form.propTypes = {
-    name: PropTypes.string,
-    number: PropTypes.number,
-};
-
 
