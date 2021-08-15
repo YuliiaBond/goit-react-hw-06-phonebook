@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {addContact} from '../../redux/actions'
 import style from './Form.module.css'
 
 export default function Form({ onSubmit }) {
     const dispatch = useDispatch();
+    const contacts = useSelector(state => state.contacts.item)
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
     
+    // console.log(contacts);
+
     const handleChange = event => {
         const { name, value } = event.currentTarget;
 
@@ -30,6 +33,10 @@ export default function Form({ onSubmit }) {
 
         if (!name || !number) {
             return;
+        }
+
+        if (contacts.map(contact => contact.name).includes(name)) {
+            alert(`${name} is already in contacs.`)
         }
 
         dispatch(addContact({ name, number }));
